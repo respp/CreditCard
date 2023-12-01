@@ -10,29 +10,48 @@ interface CreditCardProps {
 
 export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, expirationDate, cvv, cardType }) => {
   const [state, setState] = useState<CreditCardProps>({ cardNumber, cardHolder, expirationDate, cvv, cardType });
+  const [warning, setWarning] = useState<string>('');
 
 //   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target;
     switch (name) {
       case 'cardNumber':
+        if (e.target instanceof HTMLInputElement) {
         const cleanedCardNumber = value.replace(/[^\d]/g, '').slice(0, 16);
         const formattedCardNumber = cleanedCardNumber.replace(/(.{4})/g, '$1 ').trim()
         setState((prevState) => ({ ...prevState, cardNumber: formattedCardNumber }));
+        }
         break;
       case 'cardHolder':
-        setState((prevState) => ({ ...prevState, cardHolder: value.toUpperCase() }));
+        if (e.target instanceof HTMLInputElement) {
+          const trimmedCardHolder = value.slice(0, 26)
+
+          if (/\d/.test(trimmedCardHolder)) {
+            setWarning('You cannot input numbers');
+          } else {
+            setWarning('');
+            setState((prevState) => ({ ...prevState, cardHolder: trimmedCardHolder.toUpperCase() }));
+          }
+
+        }
         break;
       case 'expirationDate':
+        if (e.target instanceof HTMLInputElement) {
         setState((prevState) => ({ ...prevState, expirationDate: value.replace(/[^\d]/g, '').replace(/(.{2})/, '$1/') }));
+        }
         break;
       case 'cvv':
+        if (e.target instanceof HTMLInputElement) {
         setState((prevState) => ({ ...prevState, cvv: value.replace(/[^\d]/g, '') }));
+        }
         break;
       case 'cardType':
+        if (e.target instanceof HTMLInputElement) {
         console.log(value)
         setState((prevState) => ({ ...prevState, cardType: value }));
-      break;
+        }
+        break;
       default:
         break;
     }
@@ -46,6 +65,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
         <div className="expiration-date">{state.expirationDate || 'MM/YY'}</div>
       </div>
       <div className="cvv">{state.cvv || 'CVV'}</div>
+
       <div className="card-data">
       <input
         type="text"
@@ -60,7 +80,8 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
         placeholder="Card Holder"
         value={state.cardHolder}
         onChange={handleInputChange}
-      />
+        />
+        {warning && <div className="warning">{warning}</div>}
       <input
         type="text"
         name="expirationDate"
