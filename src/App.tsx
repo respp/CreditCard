@@ -6,11 +6,11 @@ function App() {
   return (
     <>
      <CreditCard 
-      cardNumber = '123'
-      cardHolder = '123'
+      cardNumber = ''
+      cardHolder = ''
       expirationDate = '12/23'
-      cvv = '123'
-      cardType = 'Visa'
+      cvv = ''
+      cardType = ''
      />
     </>
   )

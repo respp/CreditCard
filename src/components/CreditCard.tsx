@@ -11,7 +11,8 @@ interface CreditCardProps {
 export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, expirationDate, cvv, cardType }) => {
   const [state, setState] = useState<CreditCardProps>({ cardNumber, cardHolder, expirationDate, cvv, cardType });
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+//   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target;
     switch (name) {
       case 'cardNumber':
@@ -29,6 +30,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
         setState((prevState) => ({ ...prevState, cvv: value.replace(/[^\d]/g, '') }));
         break;
       case 'cardType':
+        console.log(value)
         setState((prevState) => ({ ...prevState, cardType: value }));
       break;
       default:
@@ -40,10 +42,11 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
     <div className="credit-card">
       <div className="card-number">{state.cardNumber || '#### #### #### ####'}</div>
       <div className="card-info">
-        <div className="card-holder">{state.cardHolder || 'CARD HOLDER'}</div>
+        <div className="ard-infocard-holder">{state.cardHolder || 'CARD HOLDER'}</div>
         <div className="expiration-date">{state.expirationDate || 'MM/YY'}</div>
       </div>
       <div className="cvv">{state.cvv || 'CVV'}</div>
+      <div className="card-data">
       <input
         type="text"
         name="cardNumber"
@@ -81,7 +84,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
             <option value="Mastercard">Mastercard</option>
             <option value="American Express">American Express</option>
         </select>
-
+      </div>
     </div>
   );
 };
