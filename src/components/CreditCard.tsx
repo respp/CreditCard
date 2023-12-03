@@ -42,7 +42,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
 
         }
         break;
-      case 'expirationDate':
+      case 'expirationDate': //MICA ME HIZO ACORDAR QUE TENGO QUE PONERLE LIMITE
         if (e.target instanceof HTMLInputElement) {
           const trimmedExpirationDate: string = formatExpirationDate(value)
 
