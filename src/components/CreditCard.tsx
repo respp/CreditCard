@@ -3,6 +3,9 @@ import { formatCardNumber, formatExpirationDate } from '../helpers/formattingHel
 import { getCardType } from '../helpers/creditCardHelpers';
 import { isValidCardHolder } from '../helpers/validationHelpers';
 import CardForm from './CardForm';
+import chipImage from "../assets/chip.png";
+import logoVisa from "../assets/visa.png";
+import mapImage from "../assets/map.png";
 
 interface CreditCardProps {
   cardNumber: string;
@@ -31,7 +34,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
         break;
       case 'cardHolder':
         if (e.target instanceof HTMLInputElement) {
-          const trimmedCardHolder: string = value.slice(0, 26).trim()
+          const trimmedCardHolder: string = value.slice(0, 26)
 
           if (isValidCardHolder(trimmedCardHolder) !== true) {
             setWarning('You cannot input numbers');
@@ -66,13 +69,27 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
   };
 
   return (
+    <div className="container">
+
     <div className="credit-card">
-      <div className="card-number">{state.cardNumber || '#### #### #### ####'}</div>
-      <div className="card-info">
-        <div className="ard-infocard-holder">{state.cardHolder || 'CARD HOLDER'}</div>
-        <div className="expiration-date">{state.expirationDate || 'MM/YY'}</div>
-      </div>
-      <div className="cvv">{state.cvv || 'CVV'}</div>
+      <div className="front">
+        <img className='map-image' src={mapImage} alt="map" />
+        <div className="row">
+          <img className='chip-image' src={chipImage} alt="chip" />
+          <img className='logo-visa' src={logoVisa} alt="chip" />
+        </div>
+            <div className="card-number">{state.cardNumber || '#### #### #### ####'}</div>
+            <div className="card-info">
+              <div className="card-holder">{state.cardHolder || 'CARD HOLDER'}</div>
+              <div className="expiration-date">{state.expirationDate || 'MM/YY'}</div>
+            </div>
+        </div>
+        <div className="back">
+          <img className='map-image' src={mapImage} alt="map" />
+          <img className='chip-image' src={chipImage} alt="chip" />
+          <div className="cvv">{state.cvv || 'CVV'}</div>
+        </div>
+    </div>
 
       <CardForm
         onInputChange={handleInputChange}

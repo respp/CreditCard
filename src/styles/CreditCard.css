@@ -1,0 +1,122 @@
+
+.container{
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f2e3e3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.credit-card {
+    margin: 35px 0 50px 0;
+    position: relative;
+    width: 500px;
+    height: 300px;
+    background-color: #3498db;
+    color: white; /* color de letra */
+    border-radius: 15px;
+    perspective: 1000px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform .5s;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.489);
+  }
+
+  .front, .back{
+    width: 100%;
+    height: 100%;
+    /* background-image: linear-gradient(45 deg, #0045c7, #ff2c7d); */
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 30px 30px;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .credit-card:hover {
+    transform: rotateY(180deg);
+  }
+  
+  .card-number {
+    font-size: 1.5em;
+    margin: 50px 0 0 0;
+  }
+  
+  .card-info {
+    display: flex;
+    justify-content: space-between;
+    margin: 100px 0 40px 0;
+  }
+  
+  .card-holder,
+  .expiration-date {
+    font-size: 1em;
+  }
+  
+  .cvv {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 1.2em;
+  }
+  
+  .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 15px;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card-back::before {
+    content: "CVV";
+    font-size: 1.2em;
+  }
+  
+  .card-back::after {
+    content: "###";
+    font-size: 1.5em;
+    margin-top: 10px;
+  }
+
+  .card-data{
+    margin: 35px;
+  }
+
+  /* ---------------------------------------------------------------- IMAGES ---------------------------------------------------------------- */
+
+  .chip-image{
+    width: 60px;
+  }
+
+  .logo-visa{
+    width: 80px;
+  }
+
+  .map-image{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: .3;
+    z-index: -1;
+  }
+  
+  /* Agrega cualquier estilo adicional según sea necesario */
+  
