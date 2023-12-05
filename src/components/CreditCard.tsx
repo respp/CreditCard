@@ -6,6 +6,7 @@ import CardForm from './CardForm';
 import chipImage from "../assets/chip.png";
 import logoVisa from "../assets/visa.png";
 import mapImage from "../assets/map.png";
+import pattern from "../assets/pattern.png";
 
 interface CreditCardProps {
   cardNumber: string;
@@ -69,27 +70,38 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
   };
 
   return (
-    <div className="container">
-
-    <div className="credit-card">
-      <div className="front">
-        <img className='map-image' src={mapImage} alt="map" />
-        <div className="row">
-          <img className='chip-image' src={chipImage} alt="chip" />
-          <img className='logo-visa' src={logoVisa} alt="chip" />
-        </div>
+  <div className="container">
+    <div className="card">
+        <div className="card-inner">
+            <div className="front">
+                <img className='map-image' src={mapImage} alt="map" />
+                <div className="row">
+                    <img className='chip-image' src={chipImage} alt="chip" />
+                    <img className='logo-visa' src={logoVisa} alt="chip" />
+                </div>
             <div className="card-number">{state.cardNumber || '#### #### #### ####'}</div>
             <div className="card-info">
-              <div className="card-holder">{state.cardHolder || 'CARD HOLDER'}</div>
-              <div className="expiration-date">{state.expirationDate || 'MM/YY'}</div>
+                <div className="card-holder">{state.cardHolder || 'CARD HOLDER'}</div>
+                <div className="expiration-date">{state.expirationDate || 'MM/YY'}</div>
             </div>
-        </div>
+            {/* Cierre de front */}
+            </div>
+
         <div className="back">
-          <img className='map-image' src={mapImage} alt="map" />
-          <div className="bar"></div>
-          {/* <img className='chip-image' src={chipImage} alt="chip" /> */}
-          <div className="cvv">{state.cvv || 'CVV'}</div>
+           <img className='map-image' src={mapImage} alt="map" />
+            <div className="bar"></div>
+                <div className="row">
+                      <div>
+                        <img className='pattern' src={pattern} alt="patterns" />
+                      </div>
+                      <div className="cvv">{state.cvv || 'CVV'}</div>
+                </div>
+                      <img className='logo-visa' src={logoVisa} alt="chip" />
         </div>
+
+
+      {/* Cierre de card-inner */}
+      </div>
     </div>
 
       <CardForm
