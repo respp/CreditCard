@@ -96,7 +96,9 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
                       </div>
                       <div className="cvv">{state.cvv || 'CVV'}</div>
                 </div>
+                <div className="row-logo">
                       <img className='logo-visa' src={logoVisa} alt="chip" />
+                </div>
         </div>
 
 

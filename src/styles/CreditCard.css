@@ -1,28 +1,28 @@
 *{
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 
 .container{
-  min-height: 100vh;
-  width: 100%;
-  background-color: #f2e3e3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #f2e3e3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .card {
-    margin: 35px 0 50px 0;
+    margin: 35px 0 100px 0;
     width: 500px;
     height: 300px;
-    /* background-color: #3498db; */
     color: white; /* color de letra */
     perspective: 1000px;
     cursor: pointer;
     user-select: none;
     perspective: 1000px;
+    
   }
   
   .card-inner{
@@ -36,7 +36,6 @@
   .front, .back{
     width: 100%;
     height: 100%;
-    /* background-color: #a95555; */
     background-image: linear-gradient(45deg, #0045c7, #ff2c7d);
     position: absolute;
     top: 0;
@@ -58,6 +57,10 @@
   .back{
     transform: rotateY(180deg);
   }
+
+  .back .row .row-logo{
+    display: flex;
+  }
   
   .card-number {
     font-size: 1.5em;
@@ -76,10 +79,6 @@
   }
   
   .cvv, .pattern {
-    /* position: absolute;
-    bottom: 20px;
-    right: 20px;
-    font-size: 1.2em; */
     margin: 20px 0 0 0;
   }
 
@@ -90,6 +89,20 @@
     padding: 10px 20px;
   }
 
+  .row-logo{
+    height: 110px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+  
+  .card:hover .card-inner{
+    transform: rotateY(180deg);
+    
+  }
+  
+  /* ---------------------------------------------------------------- IMAGES ---------------------------------------------------------------- */
+ 
   .pattern{
     width: 100%;
     display: block;
@@ -103,35 +116,20 @@
     margin-right: -30px;
     height: 60px;
   }
-
-  .card:hover .card-inner{
-    transform: rotateY(180deg);
-
-  }
   
-  .card-back::before {
-    content: "CVV";
-    font-size: 1.2em;
-  }
-  
-  .card-back::after {
-    content: "###";
-    font-size: 1.5em;
-    margin-top: 10px;
-  }
-
-  .card-data{
-    margin: 35px;
-  }
-
-  /* ---------------------------------------------------------------- IMAGES ---------------------------------------------------------------- */
-
   .chip-image{
     width: 60px;
   }
 
   .logo-visa{
     width: 80px;
+  }
+  
+  .row-logo .logo-visa{
+    align-self: flex-end;
+    margin-right: 20px;
+    width: 100px;
+    opacity: .6;
   }
 
   .map-image{
@@ -143,5 +141,11 @@
     z-index: -1;
   }
   
-  /* Agrega cualquier estilo adicional según sea necesario */
+  /* ---------------------------------------------------------------- FOCUS CVV ---------------------------------------------------------------- */
+
+  .card-data:hover .card-inner,
+  .card-data.cvv-input-focused .card-inner {
+    transform: rotateY(180deg);
+  }
+
   

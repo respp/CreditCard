@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 interface CardFormProps {
   onInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
@@ -19,6 +19,17 @@ const CardForm: React.FC<CardFormProps> = ({
   cardType,
   warning,
 }) => {
+
+  const [isCvvInputFocused, setIsCvvInputFocused] = useState(false);
+
+  const handleCvvInputFocus = () => {
+    setIsCvvInputFocused(true);
+  };
+
+  const handleCvvInputBlur = () => {
+    setIsCvvInputFocused(false);
+  };
+
   return (
     <div className="card-data">
       <input
