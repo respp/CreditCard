@@ -19,19 +19,20 @@ const CardForm: React.FC<CardFormProps> = ({
   cardType,
   warning,
 }) => {
-
   const [isCvvInputFocused, setIsCvvInputFocused] = useState(false);
 
+  // Cuando el input asociado al CVV recibe el foco
   const handleCvvInputFocus = () => {
     setIsCvvInputFocused(true);
   };
-
+  
+  // Cuando el input asociado al CVV pierde el foco
   const handleCvvInputBlur = () => {
     setIsCvvInputFocused(false);
   };
 
   return (
-    <div className="card-data">
+    <div className={`card-data ${isCvvInputFocused ? 'cvv-input-focused' : ''}`}>
       <input
         type="text"
         name="cardNumber"
@@ -60,6 +61,8 @@ const CardForm: React.FC<CardFormProps> = ({
         placeholder="CVV"
         value={cvv}
         onChange={onInputChange}
+        onFocus={handleCvvInputFocus}
+        onBlur={handleCvvInputBlur}
       />
       <select
         name="cardType"

@@ -2,6 +2,7 @@
 import { CreditCard } from './components/CreditCard'
 import './styles/App.css'
 import './styles/CreditCard.css'
+import './styles/CardForm.css'
 
 function App() {
 
