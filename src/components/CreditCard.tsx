@@ -3,6 +3,7 @@ import { formatCardNumber, formatExpirationDate } from '../helpers/formattingHel
 import { getCardType } from '../helpers/creditCardHelpers';
 import { isValidCardHolder } from '../helpers/validationHelpers';
 import CardForm from './CardForm';
+
 import chipImage from "../assets/chip.png";
 import logoVisa from "../assets/visa.png";
 import mapImage from "../assets/map.png";
@@ -16,22 +17,72 @@ interface CreditCardProps {
   cardType: string
 }
 
+interface CreditCardStyle{
+  backgroundColor: string
+}
+
+interface CardImages {
+  [key: string]: string;
+}
+
+
+const cardImages: CardImages = {
+  Visa: mapImage,
+};
+
+const initialCardStyle: CreditCardStyle = {
+  backgroundColor: 'linear-gradient(45deg, #0045c7, #ff2c7d)',
+}
+interface CreditCardState extends CreditCardProps {
+  cardStyle: CreditCardStyle
+  cardImage: React.CSSProperties['backgroundImage']
+}
+
+const getCardStyle = (cardType: string): CreditCardStyle => {
+  switch (cardType) {
+    case 'Visa':
+      return { 
+        backgroundColor: 'linear-gradient(45deg, #0045c7, #ff2c7d)',
+        
+      };
+    case 'Mastercard':
+      return {
+        backgroundColor: 'linear-gradient(45deg, #ffcc00, #cc0000)',
+      };
+    case 'American Express':
+      return { 
+        backgroundColor: 'linear-gradient(45deg, #3498db, #e74c3c)', 
+      };
+    default:
+      return initialCardStyle;
+  }
+};
+
 export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, expirationDate, cvv, cardType }) => {
-  const [state, setState] = useState<CreditCardProps>({ cardNumber, cardHolder, expirationDate, cvv, cardType });
+  const [state, setState] = useState<CreditCardState>({
+     cardNumber,
+     cardHolder, 
+     expirationDate, 
+     cvv, 
+     cardType, 
+     cardStyle: initialCardStyle,
+     cardImage: cardImages[cardType] || '' 
+    });
   const [warning, setWarning] = useState<string>('');
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = e.target;
+
     switch (name) {
       case 'cardNumber':
         if (e.target instanceof HTMLInputElement) {
-        const cleanedCardNumber: string = formatCardNumber(value);
-        const firstDigit = cleanedCardNumber.charAt(0);
+          const cleanedCardNumber: string = formatCardNumber(value);
+          const firstDigit = cleanedCardNumber.charAt(0);
 
-        let newCardType = getCardType(cleanedCardNumber, firstDigit);
+          let newCardType = getCardType(cleanedCardNumber, firstDigit);
 
-        setState((prevState) => ({ ...prevState, cardNumber: cleanedCardNumber, cardType: newCardType }));
-        }
+          setState((prevState) => ({ ...prevState, cardNumber: cleanedCardNumber, cardType: newCardType }));
+          }
         break;
       case 'cardHolder':
         if (e.target instanceof HTMLInputElement) {
@@ -49,32 +100,40 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
       case 'expirationDate': //MICA ME HIZO ACORDAR QUE TENGO QUE PONERLE LIMITE
         if (e.target instanceof HTMLInputElement) {
           const trimmedExpirationDate: string = formatExpirationDate(value)
-
-        setState((prevState) => ({ ...prevState, expirationDate:trimmedExpirationDate }));
+          setState((prevState) => ({ ...prevState, expirationDate:trimmedExpirationDate }));
         }
         break;
       case 'cvv':
         if (e.target instanceof HTMLInputElement) {
-        setState((prevState) => ({ ...prevState, cvv: value.replace(/[^\d]/g, '').slice(0, 3) }));
+          setState((prevState) => ({ ...prevState, cvv: value.replace(/[^\d]/g, '').slice(0, 3) }));
         }
         break;
       case 'cardType':
         if (e.target instanceof HTMLSelectElement) {
-        console.log(e.target.value)
-        setState((prevState) => ({ ...prevState, cardType: value }));
+          const newCardType = e.target.value
+          const newCardStyle = getCardStyle(newCardType);
+          const newCardImage = cardImages[newCardType] || '';
+          console.log(newCardImage)
+          
+          setState((prevState) => ({ ...prevState, cardType: newCardType, cardStyle: newCardStyle, cardImage: newCardImage }));
         }
         break;
       default:
         break;
-    }
+    } 
   };
 
+  console.log('imagen'+ state.cardImage)
   return (
   <div className="container">
     <div className="card">
         <div className="card-inner">
-            <div className="front">
-                <img className='map-image' src={mapImage} alt="map" />
+            <div className="front" style={{ 
+            background: state.cardStyle.backgroundColor //Color
+            }}>
+                <img className='map-image' alt="map" style={{
+                  backgroundImage: state.cardImage //Background Image
+                  }} />
                 <div className="row">
                     <img className='chip-image' src={chipImage} alt="chip" />
                     <img className='logo-visa' src={logoVisa} alt="chip" />
@@ -87,7 +146,9 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
             {/* Cierre de front */}
             </div>
 
-        <div className="back">
+        <div className="back" style={{ 
+            background: state.cardStyle.backgroundColor 
+            }}>
            <img className='map-image' src={mapImage} alt="map" />
             <div className="bar"></div>
                 <div className="row">

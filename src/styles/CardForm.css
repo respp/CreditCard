@@ -1,5 +1,137 @@
+  /* Estilos para el formulario */
+.card-data {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 50vw;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para los inputs */
+.card-data input,
+.card-data select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.card-data input:focus,
+.card-data select:focus {
+  border-color: #3498db;
+}
+
+/* Estilos para el mensaje de advertencia */
+.warning {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Estilos para el contenedor del formulario cuando el input de CVV tiene foco */
+.cvv-input-focused {
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.7);
+}
+
+  /* ---------------------------------------------------------------- PLACEHOLDER ---------------------------------------------------------------- */
+
+/* Estilos para el placeholder cuando el input está vacío o el valor está borrado */
+.card-data input::placeholder,
+.card-data select::placeholder {
+  color: #999;
+  transition: color 0.3s;
+}
+
+/* Estilos para el input cuando el placeholder está mostrado */
+.card-data select:placeholder-shown {
+  border-color: #dddddd; /* Cambia el color del borde cuando el placeholder está visible */
+}
+
+
+/* Estilos para el input cuando tiene foco */
+.card-data input:focus,
+.card-data select:focus {
+  border-color: #3498db;
+}
+
+/* Estilos para el placeholder cuando el input tiene foco */
+.card-data input:focus::placeholder,
+.card-data select:focus::placeholder {
+  color: #3498db; /* Cambia el color del placeholder cuando el input tiene foco */
+}
+
+.pl-card-number,
+.pl-expiration,
+.pl-holder,
+.pl-cvv {
+  position: relative;
+  display: inline-block;
+  width: 110px;
+  top: -40px;
+  left: 8px;
+  font-size: 16px;
+  padding: 0px 5px;
+  color: #999;
+  transition: .3s;
+  pointer-events: none;
+}
+
+.pl-holder{
+  width: 100px;
+}
+
+.pl-expiration{
+  width: 130px;
+}
+
+.pl-cvv{
+  width: 45px;
+}
+
+input:focus + .pl-card-number{
+  top: -60px;
+  color: #3498db;
+  background: #ffffff;
+}
+
+input:focus + .pl-expiration{
+  top: -60px;
+  color: #3498db;
+  background: #fff;
+}
+
+input:focus + .pl-cvv{
+  top: -60px;
+  color: #3498db;
+  background: #fff;
+}
+  
+
+input:focus + .pl-holder{
+  top: -60px;
+  color: #3498db;
+  background: #fff;
+}
+
+/* Estilos para los placeholders cuando el input tiene contenido */
+.pl-card-number.placeholder-active,
+.pl-expiration.placeholder-active,
+.pl-holder.placeholder-active,
+.pl-cvv.placeholder-active {
+  top: -60px;
+  color: #3498db;
+  background: #ffffff;
+}
+  
   /* ---------------------------------------------------------------- FOCUS CVV ---------------------------------------------------------------- */
 
-  .card-data.cvv-input-focused .card-inner {
-    transform: rotateY(180deg);
-  }
+.card-rotated .card-inner{
+  transform: rotateY(180deg);
+}
