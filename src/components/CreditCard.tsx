@@ -4,10 +4,6 @@ import { getCardType } from '../helpers/creditCardHelpers';
 import { isValidCardHolder } from '../helpers/validationHelpers';
 import CardForm from './CardForm';
 
-import chipImage from "../assets/chip.png";
-import logoVisa from "../assets/visa.png";
-import mapImage from "../assets/map.png";
-import pattern from "../assets/pattern.png";
 
 // Credit Card Styles
 interface CreditCardStyle{
@@ -19,9 +15,6 @@ interface CardImages {
   [key: string]: string;
 }
 
-const cardImages: CardImages = {
-  'Visa': mapImage,
-};
 
 //Credit Card Props
 interface CreditCardProps {
@@ -68,7 +61,6 @@ export const CreditCard: React.FC<CreditCardProps> = ({
   cvv, 
   cardType,
   cardStyle,
-  cardImage,
 }) => {
   const [state, setState] = useState<CreditCardProps>({
      cardNumber,
@@ -123,10 +115,6 @@ export const CreditCard: React.FC<CreditCardProps> = ({
         if (e.target instanceof HTMLSelectElement) {
           const newCardType = e.target.value
           const newCardStyle = getCardStyle(newCardType);
-          const newCardImage = cardImages[newCardType] || '';
-          console.log(newCardImage)
-          
-          setState((prevState) => ({ ...prevState, cardType: newCardType, cardStyle: newCardStyle, cardImage: newCardImage }));
         }
         break;
       default:
