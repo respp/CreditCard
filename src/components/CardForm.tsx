@@ -25,8 +25,8 @@ const CardForm: React.FC<CardFormProps> = ({
   const handleCvvInputFocus = () => {
     setIsCvvInputFocused(true);
     setIsCardRotated(true);
-    console.log('isCvvInputFocused:', isCvvInputFocused);
-    console.log('isCardRotated:', isCardRotated);
+    // console.log('isCvvInputFocused:', isCvvInputFocused);
+    // console.log('isCardRotated:', isCardRotated);
   };
   
   const handleCvvInputBlur = () => {
