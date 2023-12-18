@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { formatCardNumber, formatExpirationDate } from '../helpers/formattingHelpers';
 import { getCardType } from '../helpers/creditCardHelpers';
 import { isValidCardHolder } from '../helpers/validationHelpers';
@@ -18,29 +18,6 @@ import chipImageAmericanExpress from "../assets/chip2.png"
 
 import bgMastercard from "../assets/globe.png"
 import logoMastercard from "../assets/mastercard.png"
-
-const preloadImages = (imageObj: Record<string, string>) => {
-  for (const key in imageObj) {
-    if (Object.prototype.hasOwnProperty.call(imageObj, key)) {
-      const img = new Image();
-      img.src = imageObj[key];
-    }
-  }
-};
-
-const allCardImages = {
-  bgVisa: bgVisa,
-  bgMastercard: bgMastercard,
-  bgAmericanExpress: bgAmericanExpress,
-  logoVisa: logoVisa,
-  logoAmericanExpress: logoAmericanExpress,
-  logoMastercard: logoMastercard,
-  chipImage: chipImage,
-  chipImageAmericanExpress: chipImageAmericanExpress,
-  pattern: pattern
-};
-
-preloadImages(allCardImages)
 
 const initialCardStyle: ICreditCardStyle = {
   backgroundColor: 'linear-gradient(45deg, #0045c7, #ff2c7d)',
