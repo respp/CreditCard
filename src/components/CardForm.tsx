@@ -1,16 +1,7 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
+import { ICardFormProps } from '../interfaces/CardFormProps.interface';
 
-interface CardFormProps {
-  onInputChange: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-  cardNumber: string;
-  cardHolder: string;
-  expirationDate: string;
-  cvv: string;
-  cardType: string;
-  warning: string;
-}
-
-const CardForm: React.FC<CardFormProps> = ({
+const CardForm: React.FC<ICardFormProps> = ({
   onInputChange,
   cardNumber,
   cardHolder,

@@ -1,63 +1,62 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { formatCardNumber, formatExpirationDate } from '../helpers/formattingHelpers';
 import { getCardType } from '../helpers/creditCardHelpers';
 import { isValidCardHolder } from '../helpers/validationHelpers';
 import CardForm from './CardForm';
+import { ICreditCardStyle } from '../interfaces/CreditCardStyle.interface';
+import { ICreditCardProps } from '../interfaces/CreditCardProps.interface';
+import { ICreditCardState } from '../interfaces/CreditCardState.interface';
 import chipImage from "../assets/chip.png";
 import pattern from "../assets/pattern.png";
 
 import logoVisa from "../assets/visa.png";
-import mapImage from "../assets/map.png";
+import bgVisa from "../assets/map.png";
 
-import americanExpress from "../assets/americane2.png"
 import logoAmericanExpress from "../assets/logo-american-express.png"
+import bgAmericanExpress from "../assets/american-bg.png"
 import chipImageAmericanExpress from "../assets/chip2.png"
 
-import globe from "../assets/globe.png"
+import bgMastercard from "../assets/globe.png"
 import logoMastercard from "../assets/mastercard.png"
 
+const preloadImages = (imageObj: Record<string, string>) => {
+  for (const key in imageObj) {
+    if (Object.prototype.hasOwnProperty.call(imageObj, key)) {
+      const img = new Image();
+      img.src = imageObj[key];
+    }
+  }
+};
 
-interface CreditCardProps {
-  cardNumber: string;
-  cardHolder: string;
-  expirationDate: string;
-  cvv: string;
-  cardType: string
-}
+const allCardImages = {
+  bgVisa: bgVisa,
+  bgMastercard: bgMastercard,
+  bgAmericanExpress: bgAmericanExpress,
+  logoVisa: logoVisa,
+  logoAmericanExpress: logoAmericanExpress,
+  logoMastercard: logoMastercard,
+  chipImage: chipImage,
+  chipImageAmericanExpress: chipImageAmericanExpress,
+  pattern: pattern
+};
 
-interface CreditCardStyle{
-  backgroundColor: string;
-  opacity?: string;
-  backgroundImage?: string;
-  logoImage: string;
-  widthLogo?: string;
-  margin?: string;
-  chip?: string;
-  marginRow?: string;
-  marginChip?: string;	
-  fontColor?: string;
-  fontWeight?: string;
-  textShadow?: string;
-  backgroundSize?: string;
-}
+preloadImages(allCardImages)
 
-const initialCardStyle: CreditCardStyle = {
+const initialCardStyle: ICreditCardStyle = {
   backgroundColor: 'linear-gradient(45deg, #0045c7, #ff2c7d)',
-  logoImage: logoVisa
+  backgroundImage: bgVisa,
+  logoImage: logoVisa,
+  opacity: '.3',
+  margin: '100px 0 40px 0',
+  chip: chipImage
 }
 
-interface CreditCardState extends CreditCardProps {
-  cardStyle: CreditCardStyle
-  // cardImage: React.CSSProperties['backgroundImage']
-}
-
-
-const getCardStyle = (cardType: string): CreditCardStyle => {
+const getCardStyle = (cardType: string): ICreditCardStyle => {
   switch (cardType) {
     case 'Visa':
       return { 
         backgroundColor: 'linear-gradient(45deg, #0045c7, #ff2c7d)',
-        backgroundImage: mapImage,
+        backgroundImage: bgVisa,
         logoImage: logoVisa,
         opacity: '.3',
         margin: '100px 0 40px 0',
@@ -67,7 +66,7 @@ const getCardStyle = (cardType: string): CreditCardStyle => {
     case 'Mastercard':
       return {
         backgroundColor: '#729fce',
-        backgroundImage: globe,
+        backgroundImage: bgMastercard,
         logoImage:logoMastercard,
         widthLogo: '100px',
         margin: '80px 0 40px 0',
@@ -76,7 +75,7 @@ const getCardStyle = (cardType: string): CreditCardStyle => {
     case 'American Express':
       return { 
         backgroundColor: 'linear-gradient(30deg, #0C0F26, #E5E4C3)',
-        backgroundImage: americanExpress,
+        backgroundImage: bgAmericanExpress,
         logoImage: logoAmericanExpress,
         widthLogo: '250px',
         opacity:'.78',
@@ -84,17 +83,17 @@ const getCardStyle = (cardType: string): CreditCardStyle => {
         marginRow:'7px 96px 0 0', 
         marginChip: '0',
         chip: chipImageAmericanExpress,
-        fontColor: 'rgb(193, 193, 193)',
+        fontColor: '#c0c0c0',
         fontWeight: 'bold',
-        textShadow: '1.5px 3px 5px rgba(90, 86, 61, 0.73)'
+        textShadow: '1px 1px 2px rgba(255, 255, 255, 0.3), 0 0 3em rgba(255, 255, 255, 0.3)'
       };
     default:
       return initialCardStyle;
   }
 };
 
-export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, expirationDate, cvv, cardType }) => {
-  const [state, setState] = useState<CreditCardState>({ cardNumber, cardHolder, expirationDate, cvv, cardType, cardStyle:initialCardStyle });
+export const CreditCard: React.FC<ICreditCardProps> = ({ cardNumber, cardHolder, expirationDate, cvv, cardType }) => {
+  const [state, setState] = useState<ICreditCardState>({ cardNumber, cardHolder, expirationDate, cvv, cardType, cardStyle:initialCardStyle });
   const [warning, setWarning] = useState<string>('');
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
@@ -139,7 +138,6 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
         if (e.target instanceof HTMLSelectElement) {
           const newCardType = e.target.value
           const newCardStyle = getCardStyle(newCardType);
-          // const newCardImage = cardImages[newCardType] || '';
           console.log(newCardType)
           setState((prevState) => ({ ...prevState, cardType: newCardType, cardStyle: newCardStyle }));
         }
@@ -150,6 +148,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
   };
 
   return (
+<div className="all">    
   <div className="container">
     <div className="card" style={{
       color: state.cardStyle.fontColor,
@@ -158,12 +157,14 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
       }}>
         <div className="card-inner">
             <div className="front" style={{ 
-            background: state.cardStyle.backgroundColor, //Color
+            background: state.cardStyle.backgroundColor,
             }}>
                 <img className='bg-image' 
                 src={state.cardStyle.backgroundImage} 
                 style={{opacity: state.cardStyle.opacity}} 
-                alt="background-image" />                                            
+                alt="background-image"
+                loading="lazy"  />          
+
                 <div className="row" style={{margin: state.cardStyle.marginRow}}>
                     <img className='chip-image' src={state.cardStyle.chip} alt="chip" style={{margin: state.cardStyle.marginChip}}/>
                     <img className='logo-img'
@@ -182,7 +183,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
             </div>
 
         <div className="back" style={{ 
-            background: state.cardStyle.backgroundColor //Color
+            background: state.cardStyle.backgroundColor
             }}>
               <img className='bg-image' 
               src={state.cardStyle.backgroundImage} 
@@ -197,7 +198,12 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
                       <div className="cvv">{state.cvv || 'CVV'}</div>
                 </div>
                 <div className="row-logo">
-                      <img className='logo-visa' src={logoVisa} alt="chip" />
+                     <img className='logo-img'
+                     src={state.cardStyle.logoImage} 
+                     alt="chip" 
+                     style={{
+                      width:state.cardStyle.widthLogo,
+                      }}/>
                 </div>
         </div>
 
@@ -216,6 +222,7 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
         warning={warning}
       />
 
-      </div>
+  </div>
+</div>
   );
 };
