@@ -9,7 +9,7 @@ import pattern from "../assets/pattern.png";
 import logoVisa from "../assets/visa.png";
 import mapImage from "../assets/map.png";
 
-import americanExpress from "../assets/americane.png"
+import americanExpress from "../assets/americane2.png"
 import logoAmericanExpress from "../assets/logo-american-express.png"
 import chipImageAmericanExpress from "../assets/chip2.png"
 
@@ -35,6 +35,10 @@ interface CreditCardStyle{
   chip?: string;
   marginRow?: string;
   marginChip?: string;	
+  fontColor?: string;
+  fontWeight?: string;
+  textShadow?: string;
+  backgroundSize?: string;
 }
 
 const initialCardStyle: CreditCardStyle = {
@@ -67,12 +71,11 @@ const getCardStyle = (cardType: string): CreditCardStyle => {
         logoImage:logoMastercard,
         widthLogo: '100px',
         margin: '80px 0 40px 0',
-        chip: chipImage
+        chip: chipImage,
       };
     case 'American Express':
       return { 
-        // backgroundColor: 'linear-gradient(1deg, #45497C, #D3BD50)', 
-        backgroundColor: 'linear-gradient(30deg, #0C0F26, #E5E4C3)', 
+        backgroundColor: 'linear-gradient(30deg, #0C0F26, #E5E4C3)',
         backgroundImage: americanExpress,
         logoImage: logoAmericanExpress,
         widthLogo: '250px',
@@ -80,7 +83,10 @@ const getCardStyle = (cardType: string): CreditCardStyle => {
         margin: '100px 0 40px 0',
         marginRow:'7px 96px 0 0', 
         marginChip: '0',
-        chip: chipImageAmericanExpress
+        chip: chipImageAmericanExpress,
+        fontColor: 'rgb(193, 193, 193)',
+        fontWeight: 'bold',
+        textShadow: '1.5px 3px 5px rgba(90, 86, 61, 0.73)'
       };
     default:
       return initialCardStyle;
@@ -145,7 +151,11 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
 
   return (
   <div className="container">
-    <div className="card">
+    <div className="card" style={{
+      color: state.cardStyle.fontColor,
+      fontWeight: state.cardStyle.fontWeight,
+      textShadow: state.cardStyle.textShadow,
+      }}>
         <div className="card-inner">
             <div className="front" style={{ 
             background: state.cardStyle.backgroundColor, //Color

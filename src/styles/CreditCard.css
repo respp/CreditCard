@@ -18,11 +18,13 @@
     width: 500px;
     height: 300px;
     color: white; /* color de letra */
+    /* font-weight: bold;
+    text-shadow: 1.5px 3px 5px rgba(90, 86, 61, 0.73); */
     perspective: 1000px;
     cursor: pointer;
     user-select: none;
     perspective: 1000px;
-    
+
   }
   
   .card-inner{
@@ -31,6 +33,7 @@
     position: relative;
     transition: transform 1s;
     transform-style: preserve-3d;
+    
   }
 
   .front, .back{
