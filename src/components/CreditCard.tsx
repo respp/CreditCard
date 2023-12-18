@@ -4,9 +4,18 @@ import { getCardType } from '../helpers/creditCardHelpers';
 import { isValidCardHolder } from '../helpers/validationHelpers';
 import CardForm from './CardForm';
 import chipImage from "../assets/chip.png";
+import pattern from "../assets/pattern.png";
+
 import logoVisa from "../assets/visa.png";
 import mapImage from "../assets/map.png";
-import pattern from "../assets/pattern.png";
+
+import americanExpress from "../assets/americane.png"
+import logoAmericanExpress from "../assets/logo-american-express.png"
+import chipImageAmericanExpress from "../assets/chip2.png"
+
+import globe from "../assets/globe.png"
+import logoMastercard from "../assets/mastercard.png"
+
 
 interface CreditCardProps {
   cardNumber: string;
@@ -17,11 +26,20 @@ interface CreditCardProps {
 }
 
 interface CreditCardStyle{
-  backgroundColor: string
+  backgroundColor: string;
+  opacity?: string;
+  backgroundImage?: string;
+  logoImage: string;
+  widthLogo?: string;
+  margin?: string;
+  chip?: string;
+  marginRow?: string;
+  marginChip?: string;	
 }
 
 const initialCardStyle: CreditCardStyle = {
   backgroundColor: 'linear-gradient(45deg, #0045c7, #ff2c7d)',
+  logoImage: logoVisa
 }
 
 interface CreditCardState extends CreditCardProps {
@@ -35,15 +53,34 @@ const getCardStyle = (cardType: string): CreditCardStyle => {
     case 'Visa':
       return { 
         backgroundColor: 'linear-gradient(45deg, #0045c7, #ff2c7d)',
+        backgroundImage: mapImage,
+        logoImage: logoVisa,
+        opacity: '.3',
+        margin: '100px 0 40px 0',
+        chip: chipImage
         
       };
     case 'Mastercard':
       return {
-        backgroundColor: 'linear-gradient(45deg, #ffcc00, #cc0000)',
+        backgroundColor: '#729fce',
+        backgroundImage: globe,
+        logoImage:logoMastercard,
+        widthLogo: '100px',
+        margin: '80px 0 40px 0',
+        chip: chipImage
       };
     case 'American Express':
       return { 
-        backgroundColor: 'linear-gradient(45deg, #3498db, #e74c3c)', 
+        // backgroundColor: 'linear-gradient(1deg, #45497C, #D3BD50)', 
+        backgroundColor: 'linear-gradient(30deg, #0C0F26, #E5E4C3)', 
+        backgroundImage: americanExpress,
+        logoImage: logoAmericanExpress,
+        widthLogo: '250px',
+        opacity:'.78',
+        margin: '100px 0 40px 0',
+        marginRow:'7px 96px 0 0', 
+        marginChip: '0',
+        chip: chipImageAmericanExpress
       };
     default:
       return initialCardStyle;
@@ -111,15 +148,23 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
     <div className="card">
         <div className="card-inner">
             <div className="front" style={{ 
-            background: state.cardStyle.backgroundColor //Color
+            background: state.cardStyle.backgroundColor, //Color
             }}>
-                <img className='map-image' src={mapImage} alt="map" />
-                <div className="row">
-                    <img className='chip-image' src={chipImage} alt="chip" />
-                    <img className='logo-visa' src={logoVisa} alt="chip" />
+                <img className='bg-image' 
+                src={state.cardStyle.backgroundImage} 
+                style={{opacity: state.cardStyle.opacity}} 
+                alt="background-image" />                                            
+                <div className="row" style={{margin: state.cardStyle.marginRow}}>
+                    <img className='chip-image' src={state.cardStyle.chip} alt="chip" style={{margin: state.cardStyle.marginChip}}/>
+                    <img className='logo-img'
+                     src={state.cardStyle.logoImage} 
+                     alt="chip" 
+                     style={{
+                      width:state.cardStyle.widthLogo,
+                      }}/>
                 </div>
             <div className="card-number">{state.cardNumber || '#### #### #### ####'}</div>
-            <div className="card-info">
+            <div className="card-info" style={{margin:state.cardStyle.margin}}>
                 <div className="card-holder">{state.cardHolder || 'CARD HOLDER'}</div>
                 <div className="expiration-date">{state.expirationDate || 'MM/YY'}</div>
             </div>
@@ -129,7 +174,11 @@ export const CreditCard: React.FC<CreditCardProps> = ({ cardNumber, cardHolder, 
         <div className="back" style={{ 
             background: state.cardStyle.backgroundColor //Color
             }}>
-           <img className='map-image' src={mapImage} alt="map" />
+              <img className='bg-image' 
+              src={state.cardStyle.backgroundImage} 
+              style={{opacity: state.cardStyle.opacity}} 
+              alt="background-image" />
+
             <div className="bar"></div>
                 <div className="row">
                       <div>

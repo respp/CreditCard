@@ -51,6 +51,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
   }
 
   .back{
@@ -69,7 +70,6 @@
   .card-info {
     display: flex;
     justify-content: space-between;
-    margin: 100px 0 40px 0;
   }
   
   .card-holder,
@@ -120,23 +120,22 @@
     width: 60px;
   }
 
-  .logo-visa{
+  .logo-img{
     width: 80px;
   }
   
-  .row-logo .logo-visa{
+  .row-logo .logo-img{
     align-self: flex-end;
     margin-right: 20px;
     width: 100px;
     opacity: .6;
   }
 
-  .map-image{
+  .bg-image{
     width: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    opacity: .3;
     z-index: -1;
   }
   
